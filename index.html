@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Como va tu dia | interactivo</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <header>
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="Logo" style="width: 80px; height: auto;">
+            </div>
+            <h1>¿Cómo va tu día?</h1>
+        </header>
+
+        <section id="reveal-area" style="display: none; margin-top: 20px;">
+            <div id="media-container">
+                <video id="mood-video" playsinline style="width: 100%; border-radius: 15px; box-shadow: 0 0 20px var(--primary);">
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+            <p id="mood-message" style="font-size: 1.2rem; margin-top: 15px; font-weight: bold;"></p>
+        </section>
+
+        <section class="slider-container">
+            <input type="range" min="0" max="100" value="50" class="slider" id="mood-slider">
+            <div class="labels">
+                <span>Mal</span>
+                <span>Meh</span>
+                <span>Super</span>
+            </div>
+        </section>
+
+        <footer>
+            <button id="save-btn">Confirmar :D</button>
+        </footer>
+
+        <section class="history-container">
+            <h3>Historial</h3>
+            <div id="history-list" class="history-list">
+                <p class="empty-msg">Cargando...</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        // CONFIGURACIÓN CORREGIDA
+        const firebaseConfig = {
+            apiKey: "AIzaSyBoM1ECPNBCi_Xe6Dkv8CBDZT2of0JV_B8",
+            authDomain: "moodtracker-ecfec.firebaseapp.com",
+            databaseURL: "https://moodtracker-ecfec-default-rtdb.firebaseio.com",
+            projectId: "moodtracker-ecfec",
+            storageBucket: "moodtracker-ecfec.firebasestorage.app",
+            messagingSenderId: "340068357274",
+            appId: "1:340068357274:web:9aaf253742025a9451bb23",
+            measurementId: "G-4NR36MP668"
+        };
+
+        // Inicialización correcta para modo COMPAT
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
