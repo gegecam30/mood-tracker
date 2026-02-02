@@ -8,12 +8,13 @@
 body {
     margin: 0;
     padding: 20px;
-    background-color: var(--bg-dark);
+    background-color: #0a0a0a; /* Color base */
     color: var(--text);
     font-family: 'Segoe UI', sans-serif;
     display: flex;
     justify-content: center;
     min-height: 100vh;
+    transition: background-color 1.2s ease; /* Esto hace la magia del color */
 }
 
 .main-container {
@@ -118,5 +119,55 @@ h1 { font-size: 1.5rem; margin-bottom: 2rem; color: var(--primary); }
     opacity: 0;
     transition: opacity 0.5s ease-out;
     pointer-events: none; /* Evita que se pueda clickear mientras desaparece */
+}
+
+/* Estilos del Loader */
+#loader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease;
+}
+.loader-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+}
+
+.loader-logo {
+    width: 60px;
+    filter: drop-shadow(0 0 10px var(--primary));
+    z-index: 2;
+}
+
+.spinner {
+    width: 100%;
+    height: 100%;
+    border: 4px solid rgba(140, 12, 222, 0.1);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Clase para ocultarlo */
+.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 .mood-tag { font-weight: bold; color: var(--primary); }

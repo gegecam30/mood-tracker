@@ -21,25 +21,38 @@ const moodData = {
     mid: { vid: 'assets/videos/normal.mp4', label: 'Meh', text: 'Un día tranquilo. algo normal' },
     high: { vid: 'assets/videos/bien.mp4', label: 'Súper', text: 'Bieeen! que gusto! ' }
 };
+//
+// Nueva función para actualizar la interfaz dinámicamente
+function updateUI(value) {
+    const body = document.body;
+    let currentMood;
+
+    // 1. Determinar el estado actual y cambiar el color de fondo
+    if (value < 35) {
+        currentMood = 'low';
+        body.style.backgroundColor = "#1a0505"; // Rojo muy oscuro
+    } else if (value < 75) {
+        currentMood = 'mid';
+        body.style.backgroundColor = "#0a0a0a"; // Negro original
+    } else {
+        currentMood = 'high';
+        body.style.backgroundColor = "#1e0236"; // Morado profundo
+    }
+
+    // 2. Lógica del sonido Pop (solo si cambia de zona)
+    if (currentMood !== lastMood) {
+        soundPop.currentTime = 0;
+        soundPop.play().catch(e => console.log("Interacción necesaria"));
+        lastMood = currentMood;
+    }
+}
 
 // 4. Variables de control para el sonido de la barra
 let lastMood = 'mid'; // Para saber si cambiamos de rango y sonar
 
 // 5. EVENTO: Movimiento de la barra (Sonido Pop)
 slider.addEventListener('input', () => {
-    const val = slider.value;
-    let currentMood;
-
-    if (val < 35) currentMood = 'low';
-    else if (val < 75) currentMood = 'mid';
-    else currentMood = 'high';
-
-    // Si el usuario cambia de zona (ej: de mal a meh), suena el pop
-    if (currentMood !== lastMood) {
-        soundPop.currentTime = 0; // Reinicia el sonido para que suene rápido
-        soundPop.play().catch(e => console.log("Interacción necesaria para audio"));
-        lastMood = currentMood;
-    }
+    updateUI(slider.value);
 });
 
 // 6. EVENTO: Confirmar (Funde y Video)
@@ -115,4 +128,12 @@ database.ref('logs').limitToLast(10).on('value', (snapshot) => {
             historyList.appendChild(item);
         });
     }
+});
+
+// Quitar el loader cuando la página cargue totalmente
+window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    setTimeout(() => {
+        loader.classList.add('hidden');
+    }, 1000); // Le damos 1 segundo extra para que se vea el logo
 });
